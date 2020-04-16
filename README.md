@@ -45,7 +45,7 @@
 18、理解Vue中的Render渲染函数？
 
 19、Vue中相同逻辑如何抽离？
-  使用混入(mixins)分发可复用功能
+  * 使用混入(mixins)分发可复用功能
 
 20、Watch中deep:true是如何实现的？
 
