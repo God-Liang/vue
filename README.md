@@ -46,6 +46,7 @@
 
 19、Vue中相同逻辑如何抽离？
   * 使用混入(mixins)分发可复用功能
+  * 挂载到Vue原型上：Vue.prototype
 
 20、Watch中deep:true是如何实现的？
 
