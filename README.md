@@ -2,13 +2,13 @@
 
 1、Vue是什么？两大核心？优点？与其他框架的区别？
 
-2、Vue生命周期
+2、Vue生命周期？
 
-3、MVVM实现原理？
+3、MVVM实现原理？与MVC的区别？
 
 4、数据双向绑定原理？
 
-5、组件之前如何传值？
+5、组件之间如何传值？
 
 6、路由有哪些钩子函数？
 
@@ -27,11 +27,14 @@
 13、如何注册组件？
 
 14、自定义指令的用法？
-  * bind：DOM加载之前调用
-  * inserted：DOM加载之后调用
-  * update：更新之前调用
-  * componentUpdated：更新之后调用
-  * unbind： 解除绑定时调用    如v-if
+  * 全局注册：Vue.directive()
+  * 局部注册：directives: {}
+  * 钩子函数：
+    * bind：DOM加载之前调用
+    * inserted：DOM加载之后调用
+    * update：更新之前调用
+    * componentUpdated：更新之后调用
+    * unbind： 解除绑定时调用    如v-if
 
 15、插槽的作用？
 
@@ -42,7 +45,7 @@
 18、理解Vue中的Render渲染函数？
 
 19、Vue中相同逻辑如何抽离？
-混入(mixins)分发
+  使用混入(mixins)分发可复用功能
 
 20、Watch中deep:true是如何实现的？
 
@@ -54,7 +57,7 @@
 
 24、v-for为什么要用key？
 
-25、diff算法？
+25、简述diff算法原理？diff算法时间复杂度？
 
 26、用vnode来描述一个DOM结构？
 
