@@ -26,26 +26,87 @@
   * destroyed：销毁Vue实例
 
 3、MVVM实现原理？与MVC的区别？
+* MVC
+  * 模型(Model)-视图(View)-控制器(Controller)
+  * Model 负责数据访问
+  * View 负责显示数据-视图
+  * Controller 负责将Model的数据用View显示出来
+  * 控制器(Controller)做为模型(Model)和视图(View)桥梁，当模型(Model)发生改变，通过控制器(Controller)将视图(View)同步更新
+
+* MVVM
+  * 模型(Model)-视图(View)-视图模型(ViewModel)
+  * Model 负责数据访问
+  * View 负责显示数据-视图
+  * ViewModel 处理业务逻辑
+  * MVVM没有控制器。ViewModel是View和Model层的桥梁，数据会绑定到viewModel层并自动将数据渲染到页面中，视图变化的时候会通知viewModel层更新数据。
 
 4、数据双向绑定原理？
+* Vue在初始化数据时，会使用Object.defineProperty重新定义data中的所有属性，当页面使用对应属性时，首先会进行依赖收集(收集当前组件的watcher)如果属性发生变化会通知相关依赖进行更新操作(发布订阅)。
 
 5、组件之间如何传值？
+* 父子传值：props和$emit
+* 嵌套组件传值：$attrs和$listeners
+* 全局事件传值：$emit和$on
+* 实例属性传值：$parent和$children
+* vuex传值
 
 6、路由有哪些钩子函数？
+* 全局钩子函数：
+  * router.beforeEach 进入路由前
+  * router.afterEach 进入路由后
+  * 功能：处理登录状态，动画加载效果、动态路由渲染等
+* 局部钩子函数：
+  * beforeRouteEnter 进入路由前
+  * beforeRouteUpdate 路由改变时 例子：对于一个带有动态参数的路径 /foo/:id，在 /foo/1 和 /foo/2 之间跳转的时候调用此钩子函数
+  * beforeRouteLeave 进入路由后
+* 导航解析流程
+  * 导航被触发。
+  * 在失活的组件里调用离开守卫。
+  * 调用全局的 beforeEach 守卫。
+  * 在重用的组件里调用 beforeRouteUpdate 守卫 (2.2+)。
+  * 在路由配置里调用 beforeEnter。
+  * 解析异步路由组件。
+  * 在被激活的组件里调用 beforeRouteEnter。
+  * 调用全局的 beforeResolve 守卫 (2.5+)。
+  * 导航被确认。
+  * 调用全局的 afterEach 钩子。
+  * 触发 DOM 更新。
+  * 用创建好的实例调用 beforeRouteEnter 守卫中传给 next 的回调函数。
 
 7、路由两种模式hash、history理解？
+* hash：
+  * 使用 URL 的 hash 来模拟一个完整的 URL，于是当 URL 改变时，页面不会重新加载。
+* history：
+  * 充分利用 history.pushState API 来完成 URL 跳转而无须重新加载页面。需要后端配合，将404指向app所依赖的index.html
 
 8、v-if与v-show的区别？
+* v-if：
+  * 为false时，不渲染DOM
+* v-show: 
+  * 为false时，通过css中`display: none`隐藏DOM
 
 9、Vue中v-html会导致哪些问题？
+* scoped 的样式不会应用在 v-html 内部
+  * 解决办法：深度设置样式。 不使用less、scss：`>>>`；使用less、scss：`/deep/`
+* 更新的是元素的 innerHTML 。内容按普通 HTML 插入， 不会作为 Vue 模板进行编译。v-html中的表达式、绑定事件不会被解析
+  * 解决办法：带有表达式、绑定事件的html格式字符串注册成组件,渲染成DOM,再插入到父节点中
 
 10、为什么v-for和v-if不能连用？
+* v-for优先与v-if，可以通过过滤、计算属性等方法处理需要遍历的数组。从而达到不渲染不必要的DOM。
 
 11、v-model中的实现原理及如何自定义v-model？
+* v-model本质就是一个语法糖，可以看成是value + input方法的语法糖。可以通过model属性的prop和event属性来进行自定义。原生的v-model，会根据标签的不同生成不同的事件和属性。
+  * text 和 textarea 元素使用 value 属性和 input 事件；
+  * checkbox 和 radio 使用 checked 属性和 change 事件；
+  * select 使用 value 属性和 change 事件
 
 12、组件中的data为什么是一个函数？
+* 组件化的好处就是复用，单个组件定义的data中属性相同，修改其中一个其他也会改变，为了每个组件实例管理自己的数据。data是一个函数。
  
-13、如何注册组件？
+13、如何注册组件？组件渲染和更新的过程？
+* 全局注册：Vue.component
+* 局部注册：components：{}
+* 通过递归，将组件转化为VNode
 
 14、自定义指令的用法？
   * 全局注册：Vue.directive()
