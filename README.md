@@ -11,7 +11,7 @@
   * 渐进式框架，轻量
 * 缺点：
   * vue1.0和vue2.0区别较大
-  * 由于Object.defineproperty属于es5特性，不支持ie8及更多版本的浏览器
+  * 由于Object.defineproperty属于es5特性，不支持ie8及更老版本的浏览器
   * 实现方法过多，不便与维护
 
 2、Vue生命周期？
@@ -39,6 +39,8 @@
   * View 负责显示数据-视图
   * ViewModel 处理业务逻辑
   * MVVM没有控制器。ViewModel是View和Model层的桥梁，数据会绑定到viewModel层并自动将数据渲染到页面中，视图变化的时候会通知viewModel层更新数据。
+
+* ViewModel存在目的在于抽离Controller中展示的业务逻辑，而不是替代Controller，其它视图操作业务等还是应该放在Controller中实现。MVVM强调的是业务逻辑组件的复用，而将Controller弱化了。
 
 4、数据双向绑定原理？
 * Vue在初始化数据时，会使用Object.defineProperty重新定义data中的所有属性，当页面使用对应属性时，首先会进行依赖收集(收集当前组件的watcher)如果属性发生变化会通知相关依赖进行更新操作(发布订阅)。
@@ -101,7 +103,7 @@
   * select 使用 value 属性和 change 事件
 
 12、组件中的data为什么是一个函数？
-* 组件化的好处就是复用，单个组件定义的data中属性相同，修改其中一个其他也会改变，为了每个组件实例管理自己的数据。data是一个函数。
+* 组件化的好处就是复用，单个组件定义的data中属性相同，修改其中一个其他也会改变，为了每个组件实例管理自己的数据。data是一个函数。通过每次调用函数，重新声明data
  
 13、如何注册组件？组件渲染和更新的过程？
 * 全局注册：Vue.component
@@ -163,9 +165,26 @@
 
 
 26、用vnode来描述一个DOM结构？
+* 所谓虚拟DOM，是一个用于表示真实 DOM 结构和属性的 JavaScript 对象，这个对象用于对比虚拟 DOM 和当前真实 DOM 的差异化，然后进行局部渲染从而实现性能上的优化
 
 27、Vue中模板编译原理？
+* 解析器：将模板Template生成AST语法树（也就是一个对象）
+* 优化器：为AST语法树的静态节点及静态根节点打标记
+* 代码生成器：将AST语法树转化为render函数
+* render函数转化为虚拟DOM,再将虚拟DOM通过diff算法转生成真实DOM
+![模板编译原理](https://upload-images.jianshu.io/upload_images/9955987-0bc6a3a6a0306382.png?imageMogr2/auto-orient/strip|imageView2/2/w/1200/format/webp)
 
 28、Vue常见性能优化？
+* v-for 设置唯一key便于diff算法查找处理
+* 路由懒加载
+* 使用keep-alive通过对组件进行缓存，从而节省性能
+* 图片懒加载、骨架屏
+* 抽离公共组件、API接口
+* 第三方模块按需导入，使用cdn加载
+* 压缩，缓存
+* 搜索、滚动使用防抖、节流
 
 29、Vue3.0中的改进？
+* 双向数据绑定：
+  * 不同点：proxy 可以直接监听对象、数组；Object.defineProperty只能劫持属性，监听对象需要遍历整个对象，无法监听数组
+  * 相同点：都无法监听嵌套对象
