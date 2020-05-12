@@ -16,14 +16,14 @@
 
 2、Vue生命周期？
 * 从开始创建、初始化数据、编译模板、挂在DOM、渲染-更新-渲染、卸载等一系列从创建到销毁的过程
-  * beforeCreate：Vue实例初始化
-  * created：初始化数据
-  * beforeMount：创建虚拟DOM，编译模板
-  * mounted：渲染真实DOM
-  * beforeUpdate：更新前
-  * updated：更新数据，虚拟DOM重新渲染
-  * beforeDestroy：销毁前
-  * destroyed：销毁Vue实例
+* beforeCreate：Vue实例初始化
+* created：初始化数据
+* beforeMount：创建虚拟DOM，编译模板
+* mounted：渲染真实DOM
+* beforeUpdate：更新前
+* updated：更新数据，虚拟DOM重新渲染
+* beforeDestroy：销毁前
+* destroyed：销毁Vue实例
 
 3、MVVM实现原理？与MVC的区别？
 * MVC
@@ -180,11 +180,39 @@
 * 使用keep-alive通过对组件进行缓存，从而节省性能
 * 图片懒加载、骨架屏
 * 抽离公共组件、API接口
-* 第三方模块按需导入，使用cdn加载
+* 第三方模块按需导入，或使用cdn加载
 * 压缩，缓存
 * 搜索、滚动使用防抖、节流
+* 使用pug/jade 模板渲染引擎，使用less/sass
 
 29、Vue3.0中的改进？
 * 双向数据绑定：
   * 不同点：proxy 可以直接监听对象、数组；Object.defineProperty只能劫持属性，监听对象需要遍历整个对象，无法监听数组
   * 相同点：都无法监听嵌套对象
+* 掘金相关文章
+[抄笔记：尤雨溪在Vue3.0 Beta直播里聊到了这些…](https://juejin.im/post/5e9f6b3251882573a855cd52#heading-12)
+[Vue3 究竟好在哪里？](https://juejin.im/post/5e9ce011f265da47b8450c11)
+[精读《Vue3.0 Function API》](https://juejin.im/post/5d1955e3e51d4556d86c7b09)
+30、Vue 传参query和params的区别？
+* params是通过router配置的，如：`/:id`、`/:id/:childrenId`。当存在多个参数时，在页面中`/1/10`，不知道对应的参数。
+* query 是直接在路径后跟`?id=1&childrenId=10`。可以很直观的看到参数值对应的参数名
+
+31、Vue 常用修饰符？
+* .stop 阻止事件冒泡
+* .prevent 阻止默认行为。相当于event.preventDefault()
+* .once 只触发一次
+* .self 点击自身元素触发，点击内部元素不触发
+* 按键修饰符 
+  * .enter
+  * .tab
+  * .delete (捕获“删除”和“退格”键)
+  * .esc
+  * .space
+  * .up
+  * .down
+  * .left
+  * .right
+  * 全局自定义`Vue.config.keyCodes.f1 = 112`，使用 `v-on:keyup.f1`
+
+32、项目如何分模块开发？
+* 配置webpack多入口，通过cross-env设置环境变量。从而打包不同模块。
