@@ -197,9 +197,10 @@
   * 不同点：proxy 可以直接监听对象、数组；Object.defineProperty只能劫持属性，监听对象需要遍历整个对象，无法监听数组
   * 相同点：都无法监听嵌套对象
 * 掘金相关文章
-[抄笔记：尤雨溪在Vue3.0 Beta直播里聊到了这些…](https://juejin.im/post/5e9f6b3251882573a855cd52#heading-12)
-[Vue3 究竟好在哪里？](https://juejin.im/post/5e9ce011f265da47b8450c11)
-[精读《Vue3.0 Function API》](https://juejin.im/post/5d1955e3e51d4556d86c7b09)
+  * [抄笔记：尤雨溪在Vue3.0 Beta直播里聊到了这些…](https://juejin.im/post/5e9f6b3251882573a855cd52#heading-12)
+  * [Vue3 究竟好在哪里？](https://juejin.im/post/5e9ce011f265da47b8450c11)
+  * [精读《Vue3.0 Function API》](https://juejin.im/post/5d1955e3e51d4556d86c7b09)
+  
 30、Vue 传参query和params的区别？
 * params是通过router配置的，如：`/:id`、`/:id/:childrenId`。当存在多个参数时，在页面中`/1/10`，不知道对应的参数。
 * query 是直接在路径后跟`?id=1&childrenId=10`。可以很直观的看到参数值对应的参数名
