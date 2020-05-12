@@ -125,7 +125,14 @@
 
 16、keep-alive的作用与原理？
 * 作用：实现组件缓存
+* 钩子函数：
+  * activated 组件渲染后调用
+  * deactivated 组件销毁后调用
 * 原理：Vue.js内部将DOM节点抽象成了一个个的VNode节点，keep-alive组件的缓存也是基于VNode节点的而不是直接存储DOM结构。它将满足条件（pruneCache与pruneCache）的组件在cache对象中缓存起来，在需要重新渲染的时候再将vnode节点从cache对象中取出并渲染。
+* 配置属性：
+  * `include` 字符串或正则表达式。只有名称匹配的组件会被缓存
+  * `exclude` 字符串或正则表达式。任何名称匹配的组件都不会被缓存
+  * `max` 数字。最多可以缓存多少组件实例
 
 17、计算属性和 watch 的区别？
 * 计算属性：
