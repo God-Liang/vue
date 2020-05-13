@@ -47,8 +47,10 @@
 
 5、组件之间如何传值？
 * 父子传值：props和$emit
+  * props父组件向子组件传值，$emit子组件向父组件传值
 * 嵌套组件传值：$attrs和$listeners
-* 全局事件传值：$emit和$on
+* 全局事件传值(EventBus)：$emit和$on
+  * $emit发送数据，$onj接受数据
 * 实例属性传值：$parent和$children
 * vuex传值
 
@@ -200,7 +202,7 @@
   * [抄笔记：尤雨溪在Vue3.0 Beta直播里聊到了这些…](https://juejin.im/post/5e9f6b3251882573a855cd52#heading-12)
   * [Vue3 究竟好在哪里？](https://juejin.im/post/5e9ce011f265da47b8450c11)
   * [精读《Vue3.0 Function API》](https://juejin.im/post/5d1955e3e51d4556d86c7b09)
-  
+
 30、Vue 传参query和params的区别？
 * params是通过router配置的，如：`/:id`、`/:id/:childrenId`。当存在多个参数时，在页面中`/1/10`，不知道对应的参数。
 * query 是直接在路径后跟`?id=1&childrenId=10`。可以很直观的看到参数值对应的参数名
@@ -224,3 +226,7 @@
 
 32、项目如何分模块开发？
 * 配置webpack多入口，通过cross-env设置环境变量。从而打包不同模块。
+
+33、怎样理解 Vue 的单向数据流？
+* 所有的 prop 都使得其父子 prop 之间形成了一个单向下行绑定：父级 prop 的更新会向下流动到子组件中，但是反过来则不行。这样会防止从子组件意外改变父级组件的状态，从而导致你的应用的数据流向难以理解。
+额外的，每次父级组件发生更新时，子组件中所有的 prop 都将会刷新为最新的值。这意味着你不应该在一个子组件内部改变 prop。如果你这样做了，Vue 会在浏览器的控制台中发出警告。子组件想修改时，只能通过 $emit 派发一个自定义事件，父组件接收到后，由父组件修改。
