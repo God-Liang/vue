@@ -230,3 +230,51 @@
 33、怎样理解 Vue 的单向数据流？
 * 所有的 prop 都使得其父子 prop 之间形成了一个单向下行绑定：父级 prop 的更新会向下流动到子组件中，但是反过来则不行。这样会防止从子组件意外改变父级组件的状态，从而导致你的应用的数据流向难以理解。
 额外的，每次父级组件发生更新时，子组件中所有的 prop 都将会刷新为最新的值。这意味着你不应该在一个子组件内部改变 prop。如果你这样做了，Vue 会在浏览器的控制台中发出警告。子组件想修改时，只能通过 $emit 派发一个自定义事件，父组件接收到后，由父组件修改。
+
+34、refs的使用及缺点？
+* 当用于普通的DOM元素时，refs指向的是当前DOM元素
+* 当用于子组件时，refs指向的是组件实例
+* 缺点：vue更新视图使用的是虚拟DOM，而refs是直接操作真实DOM元素的属性，所以不推荐使用。(可以通过设置变量来动态改变DOM元素的属性)
+
+35、Vue.set/this.$set的原理？
+* 响应式属性是在vue初始化时期，调用data()函数，利用Object.defineProperty()为每一个属性添加监听事件。而通过赋值的方法添加新属性，视图是不发生改变的。如：this.data.name新增name属性。
+* [Vue.set源码](https://github.com/vuejs/vue/blob/dev/src/core/observer/index.js#L201)
+`// src/core/observer/index.js
+export function set (target: Array<any> | Object, key: any, val: any): any {
+  if (process.env.NODE_ENV !== 'production' &&
+    (isUndef(target) || isPrimitive(target))
+  ) {
+    warn(`Cannot set reactive property on undefined, null, or primitive value: ${(target: any)}`)
+  }
+  if (Array.isArray(target) && isValidArrayIndex(key)) {
+    target.length = Math.max(target.length, key)
+    target.splice(key, 1, val)
+    return val
+  }
+  if (key in target && !(key in Object.prototype)) {
+    target[key] = val
+    return val
+  }
+  const ob = (target: any).__ob__
+  if (target._isVue || (ob && ob.vmCount)) {
+    process.env.NODE_ENV !== 'production' && warn(
+      'Avoid adding reactive properties to a Vue instance or its root $data ' +
+      'at runtime - declare it upfront in the data option.'
+    )
+    return val
+  }
+  if (!ob) {
+    target[key] = val
+    return val
+  }
+  defineReactive(ob.value, key, val)
+  ob.dep.notify()
+  return val
+}
+`
+* 源码解析：
+  - 1、如果是在开发环境，且target未定义（为null、undefined）或target为基础数据类型（string、boolean、number、symbol）时，抛出告警；
+  - 2、如果target为数组且key为有效的数组key时，将数组的长度设置为target.length和key中的最大的那一个，然后调用数组的splice方法（vue中重写的splice方法）添加元素；
+  - 3、如果属性key存在于target对象中且key不是Object.prototype上的属性时，表明这是在修改target对象属性key的值（不管target对象是否是响应式的，只要key存在于target对象中，就执行这一步逻辑），此时就直接将value直接赋值给target[key]；
+  - 4、判断target，当target为vue实例或根数据data对象时，在开发环境下抛错；
+  - 5、当一个数据为响应式时，vue会给该数据添加一个__ob__属性，因此可以通过判断target对象是否存在__ob__属性来判断target是否是响应式数据，当target是非响应式数据时，我们就按照普通对象添加属性的方式来处理；当target对象是响应式数据时，我们将target的属性key也设置为响应式并手动触发通知其属性值的更新；
