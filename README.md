@@ -50,8 +50,9 @@
   * props父组件向子组件传值，$emit子组件向父组件传值
 * 嵌套组件传值：$attrs和$listeners
 * 全局事件传值(EventBus)：$emit和$on
-  * $emit发送数据，$onj接受数据
+  * $emit发送数据，$on接受数据
 * 实例属性传值：$parent和$children
+* 依赖注入  
 * vuex传值
 
 6、路由有哪些钩子函数？
@@ -160,6 +161,9 @@
 
 23、$nextTick实现原理？
 * 在下次 DOM 更新循环结束之后执行延迟回调
+``` 官网介绍：异步更新队列
+Vue 在更新 DOM 时是异步执行的。只要侦听到数据变化，Vue 将开启一个队列，并缓冲在同一事件循环中发生的所有数据变更。如果同一个 watcher 被多次触发，只会被推入到队列中一次。这种在缓冲时去除重复数据对于避免不必要的计算和 DOM 操作是非常重要的。然后，在下一个的事件循环“tick”中，Vue 刷新队列并执行实际 (已去重的) 工作。Vue 在内部对异步队列尝试使用原生的 Promise.then、MutationObserver 和 setImmediate，如果执行环境不支持，则会采用 setTimeout(fn, 0) 代替。
+```
 
 24、v-for为什么要用key？
 * key的作用是尽可能的复用 DOM 元素
